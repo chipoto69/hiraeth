@@ -12,6 +12,7 @@ import { BreathMechanic } from './BreathMechanic.js';
 import { StageManager } from '../stages/StageManager.js';
 import { VignetteShader } from '../shaders/VignetteShader.js';
 import { FilmGrainShader } from '../shaders/FilmGrainShader.js';
+import { Debug } from './Debug.js';
 
 export class Experience {
   constructor(container) {
@@ -105,6 +106,9 @@ export class Experience {
     });
     
     this.stageManager = new StageManager(this);
+    
+    this.debug = new Debug(this);
+    this.isMuted = false;
   }
   
   setupEventListeners() {
@@ -121,16 +125,19 @@ export class Experience {
   }
   
   async load() {
-    const loadingBar = document.querySelector('.loading-bar::after');
+    const loadingBarFill = document.querySelector('.loading-bar-fill');
     
     await this.stageManager.preload((progress) => {
-      const bar = document.querySelector('.loading-bar');
-      if (bar) {
-        bar.style.setProperty('--progress', `${progress * 100}%`);
+      if (loadingBarFill) {
+        loadingBarFill.style.width = `${progress * 100}%`;
       }
     });
     
     await this.audioManager.load();
+    
+    if (loadingBarFill) {
+      loadingBarFill.style.width = '100%';
+    }
     
     this.isLoaded = true;
     this.showStartPrompt();
@@ -207,6 +214,8 @@ export class Experience {
     this.sceneManager.update(delta, this.time);
     
     this.filmGrainPass.uniforms.time.value = this.time;
+    
+    this.debug.update();
     
     this.composer.render();
   }

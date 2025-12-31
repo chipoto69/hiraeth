@@ -32,7 +32,7 @@ export class KineticText {
     this.textMesh.color = this.color;
     this.textMesh.anchorX = this.anchor;
     this.textMesh.anchorY = 'middle';
-    this.textMesh.font = '/fonts/CormorantGaramond-Regular.ttf';
+    this.textMesh.font = null;
     
     this.textMesh.material = new THREE.ShaderMaterial({
       uniforms: {
