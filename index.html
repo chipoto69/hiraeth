@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hiraeth: The Home That Never Was - An interactive 3D poetry experience">
+  <title>Hiraeth: The Home That Never Was</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #1a1a1a;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    
+    #app {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    
+    #canvas-container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    
+    /* Loading screen */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: opacity 1.5s ease-out;
+    }
+    
+    #loading-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    #loading-screen h1 {
+      color: #f5f5f0;
+      font-size: 3rem;
+      font-weight: 300;
+      letter-spacing: 0.5em;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    #loading-screen p {
+      color: #888;
+      font-size: 1rem;
+      font-style: italic;
+      letter-spacing: 0.2em;
+    }
+    
+    .loading-bar {
+      width: 200px;
+      height: 1px;
+      background: #333;
+      margin-top: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .loading-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: #f5f5f0;
+      transition: width 0.3s ease-out;
+    }
+    
+    /* Start prompt */
+    #start-prompt {
+      position: fixed;
+      bottom: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #f5f5f0;
+      font-size: 1rem;
+      letter-spacing: 0.3em;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      cursor: pointer;
+      z-index: 100;
+    }
+    
+    #start-prompt.visible {
+      opacity: 0.7;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+    
+    /* Breath indicator */
+    #breath-indicator {
+      position: fixed;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 60px;
+      border: 1px solid rgba(245, 245, 240, 0.3);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+    
+    #breath-indicator.active {
+      opacity: 1;
+    }
+    
+    #breath-indicator::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0%;
+      height: 0%;
+      background: rgba(245, 245, 240, 0.1);
+      border-radius: 50%;
+      transition: width 0.1s linear, height 0.1s linear;
+    }
+    
+    #breath-indicator.filling::before {
+      width: 100%;
+      height: 100%;
+    }
+    
+    /* Instructions overlay */
+    #instructions {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #f5f5f0;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+      z-index: 50;
+    }
+    
+    #instructions.visible {
+      opacity: 0.8;
+    }
+    
+    #instructions p {
+      font-size: 1.1rem;
+      line-height: 2;
+      letter-spacing: 0.15em;
+    }
+    
+    /* Progress indicator */
+    #progress {
+      position: fixed;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2px;
+      height: 30%;
+      background: rgba(245, 245, 240, 0.1);
+      z-index: 50;
+    }
+    
+    #progress-fill {
+      width: 100%;
+      height: 0%;
+      background: rgba(245, 245, 240, 0.5);
+      transition: height 0.3s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="canvas-container"></div>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <h1>HIRAETH</h1>
+      <p>the home that never was</p>
+      <div class="loading-bar"></div>
+    </div>
+    
+    <!-- Start Prompt -->
+    <div id="start-prompt">CLICK TO BEGIN</div>
+    
+    <!-- Breath Indicator -->
+    <div id="breath-indicator"></div>
+    
+    <!-- Instructions (appears briefly at start) -->
+    <div id="instructions">
+      <p>Move forward with W or scroll</p>
+      <p>Hold click to breathe through heavy moments</p>
+    </div>
+    
+    <!-- Progress Indicator -->
+    <div id="progress">
+      <div id="progress-fill"></div>
+    </div>
+  </div>
+  
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+.env
+.env.local
+.env.*.local
+*.local
+.cache/
+.parcel-cache/
+coverage/
+.vscode/
+*.swp
+*.swo
+.idea/

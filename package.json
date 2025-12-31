@@ -1,0 +1,34 @@
+{
+  "name": "hiraeth",
+  "version": "1.0.0",
+  "description": "Hiraeth: The Home That Never Was - An interactive 3D poetry experience where the environment is the text",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .js"
+  },
+  "keywords": [
+    "three.js",
+    "webgl",
+    "interactive",
+    "poetry",
+    "kinetic-typography",
+    "hiraeth"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.170.0",
+    "gsap": "^3.12.5",
+    "howler": "^2.2.4",
+    "troika-three-text": "^0.50.1",
+    "simplex-noise": "^4.0.3"
+  },
+  "devDependencies": {
+    "vite": "^6.0.5",
+    "vite-plugin-glsl": "^1.3.0",
+    "eslint": "^9.17.0"
+  }
+}
