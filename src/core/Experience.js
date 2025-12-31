@@ -94,9 +94,9 @@ export class Experience {
     this.audioManager = new AudioManager();
     
     this.movementController = new MovementController(this.cameraController, {
-      baseSpeed: 0.015,
-      resistanceMultiplier: 0.2,
-      smoothing: 0.08
+      baseSpeed: 0.12,
+      resistanceMultiplier: 0.3,
+      smoothing: 0.2
     });
     
     this.breathMechanic = new BreathMechanic({

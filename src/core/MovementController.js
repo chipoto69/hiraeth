@@ -4,9 +4,9 @@ export class MovementController {
   constructor(cameraController, options = {}) {
     this.cameraController = cameraController;
     
-    this.baseSpeed = options.baseSpeed || 0.015;
-    this.resistanceMultiplier = options.resistanceMultiplier || 0.2;
-    this.smoothing = options.smoothing || 0.08;
+    this.baseSpeed = options.baseSpeed || 0.12;
+    this.resistanceMultiplier = options.resistanceMultiplier || 0.3;
+    this.smoothing = options.smoothing || 0.2;
     
     this.enabled = false;
     this.isMoving = false;
@@ -20,7 +20,7 @@ export class MovementController {
     };
     
     this.scrollVelocity = 0;
-    this.scrollDecay = 0.95;
+    this.scrollDecay = 0.85;
     
     this.setupInputs();
   }
@@ -49,8 +49,8 @@ export class MovementController {
     document.addEventListener('wheel', (e) => {
       if (!this.enabled) return;
       
-      this.scrollVelocity += e.deltaY * 0.0003;
-      this.scrollVelocity = Math.max(-0.5, Math.min(0.5, this.scrollVelocity));
+      this.scrollVelocity += e.deltaY * 0.005;
+      this.scrollVelocity = Math.max(-2, Math.min(2, this.scrollVelocity));
     }, { passive: true });
   }
   
