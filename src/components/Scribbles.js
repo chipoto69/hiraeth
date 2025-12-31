@@ -62,9 +62,9 @@ export class Scribbles {
       uniforms: {
         time: { value: 0 },
         opacity: { value: 0 },
-        lineColor: { value: new THREE.Color(0x0a0a0a) },
-        displacement: { value: this.chaotic ? 0.1 : 0.02 },
-        speed: { value: this.chaotic ? 3.0 : 1.0 }
+        lineColor: { value: new THREE.Color(0xaaaaaa) },
+        displacement: { value: this.chaotic ? 0.05 : 0.01 },
+        speed: { value: this.chaotic ? 2.0 : 0.5 }
       },
       vertexShader: `
         uniform float time;

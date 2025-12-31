@@ -11,8 +11,8 @@ export class CameraController {
     
     this.headBob = {
       enabled: true,
-      amplitude: 0.02,
-      frequency: 2.0,
+      amplitude: 0.008,
+      frequency: 1.5,
       phase: 0
     };
     

@@ -15,11 +15,11 @@ export class SceneManager {
     const ambient = new THREE.AmbientLight(0xf5f5f0, 0.15);
     this.scene.add(ambient);
     
-    this.mainLight = new THREE.DirectionalLight(0xf5f5f0, 0.4);
+    this.mainLight = new THREE.DirectionalLight(0xf5f5f0, 0.8);
     this.mainLight.position.set(0, 10, -5);
     this.scene.add(this.mainLight);
     
-    this.rimLight = new THREE.PointLight(0xaabbcc, 0.3, 50);
+    this.rimLight = new THREE.PointLight(0xaabbcc, 0.6, 60);
     this.rimLight.position.set(0, 5, 10);
     this.scene.add(this.rimLight);
   }

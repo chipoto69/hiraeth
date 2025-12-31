@@ -16,9 +16,9 @@ void main() {
   
   vec3 pos = position;
   
-  float noiseX = sin(time * speed + position.y * 5.0 + randomOffset) * displacement;
-  float noiseY = cos(time * speed * 0.8 + position.x * 4.0 + randomOffset) * displacement;
-  float noiseZ = sin(time * speed * 0.6 + position.z * 3.0 + randomOffset) * displacement * 0.5;
+  float noiseX = sin(time * speed * 0.5 + position.y * 3.0 + randomOffset) * displacement * 0.6;
+  float noiseY = cos(time * speed * 0.4 + position.x * 2.0 + randomOffset) * displacement * 0.6;
+  float noiseZ = sin(time * speed * 0.3 + position.z * 1.5 + randomOffset) * displacement * 0.3;
   
   pos.x += noiseX;
   pos.y += noiseY;

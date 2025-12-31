@@ -19,7 +19,7 @@ export class City {
       uniforms: {
         time: { value: 0 },
         dissolveProgress: { value: 0 },
-        lineColor: { value: new THREE.Color(0x2a2a2a) }
+        lineColor: { value: new THREE.Color(0x999999) }
       },
       vertexShader: `
         uniform float time;
@@ -66,7 +66,7 @@ export class City {
           
           if (opacity < 0.01) discard;
           
-          gl_FragColor = vec4(lineColor, opacity);
+          gl_FragColor = vec4(lineColor, opacity * 1.5);
         }
       `,
       transparent: true,

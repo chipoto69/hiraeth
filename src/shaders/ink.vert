@@ -17,8 +17,8 @@ void main() {
   
   vec3 pos = position;
   
-  float wiggle = sin(time * wiggleSpeed + position.x * 3.0) * wiggleAmount;
-  wiggle += cos(time * wiggleSpeed * 0.7 + position.y * 2.0) * wiggleAmount * 0.5;
+  float wiggle = sin(time * wiggleSpeed * 0.5 + position.x * 2.0) * wiggleAmount * 0.5;
+  wiggle += cos(time * wiggleSpeed * 0.35 + position.y * 1.5) * wiggleAmount * 0.25;
   
   pos.x += wiggle;
   pos.y += wiggle * 0.5;
